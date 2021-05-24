@@ -1,0 +1,11 @@
+- name: "service fact check"
+  hosts: docker_hosts
+  remote_user: root
+  #gather_facts: on
+  tasks:
+    - name: store services
+      service_facts:
+      register: services_state
+    - name: service running
+      debug:
+              var: services_state.ansible_facts.services["fio.service"].state

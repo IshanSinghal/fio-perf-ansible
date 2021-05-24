@@ -1,0 +1,18 @@
+- name: "Benchmarking throughput and IOPS of a disk on a running instance"
+  hosts: docker_hosts
+  remote_user: root
+  gather_facts: off
+  tasks:
+    - name: "Install fio, flexible I/O tester"
+      yum:
+        name: fio
+        state: installed
+
+    - name: "Test throughput and IOPs a disk"
+      include_role:
+        name: run_fio_benchmark
+      vars:
+        fiotest_directory: '/root/fiotest'
+        fiotest_rounds: 5
+        fiotest_retry_attempt: 120
+        fiotest_retry_delay: 60
